@@ -9,7 +9,6 @@ public class WordFrequencyGame {
         } else {
 
             try {
-
                 //split the input string with 1 to n pieces of spaces
                 String[] arr = inputStr.split("\\s+");
 
@@ -17,13 +16,12 @@ public class WordFrequencyGame {
 
                 List<Input> inputList = getInputs(arr);
 
-                inputList.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount());
+                inputList.sort((word1, word2) -> word2.getWordCount() - word1.getWordCount());
 
                 StringJoiner joiner = getStringJoiner(inputList);
 
                 return joiner.toString();
             } catch (Exception e) {
-
                 return "Calculate Error";
             }
         }
