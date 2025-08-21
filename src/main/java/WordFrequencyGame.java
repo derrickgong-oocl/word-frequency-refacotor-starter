@@ -13,29 +13,24 @@ public class WordFrequencyGame {
                 //split the input string with 1 to n pieces of spaces
                 String[] arr = inputStr.split("\\s+");
 
-                List<Input> inputList = new ArrayList<>();
-                for (String s : arr) {
-                    Input input = new Input(s, 1);
-                    inputList.add(input);
-                }
+                List<Input> inputList = Arrays.stream(arr)
+                        .map(s -> new Input(s, 1))
+                        .collect(Collectors.toList());
 
                 //get the map for the next step of sizing the same word
-                Map<String, List<Input>> map =getListMap(inputList);
+                Map<String, List<Input>> map = getListMap(inputList);
 
-                List<Input> list = new ArrayList<>();
-                for (Map.Entry<String, List<Input>> entry : map.entrySet()){
-                    Input input = new Input(entry.getKey(), entry.getValue().size());
-                    list.add(input);
-                }
-                inputList = list;
+                inputList = map.entrySet().stream()
+                        .map(entry -> new Input(entry.getKey(), entry.getValue().size()))
+                        .collect(Collectors.toList());
 
                 inputList.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount());
 
                 StringJoiner joiner = new StringJoiner("\n");
-                for (Input w : inputList) {
-                    String s = w.getValue() + " " +w.getWordCount();
-                    joiner.add(s);
-                }
+                inputList.stream()
+                        .map(w -> w.getValue() + " " + w.getWordCount())
+                        .forEach(joiner::add);
+
                 return joiner.toString();
             } catch (Exception e) {
 
@@ -46,8 +41,7 @@ public class WordFrequencyGame {
 
 
     private Map<String,List<Input>> getListMap(List<Input> inputList) {
-        Map<String, List<Input>> map = new HashMap<>();
-        map = inputList.stream()
+        Map<String, List<Input>> map = inputList.stream()
                 .collect(Collectors.groupingBy(Input::getValue));
         return map;
     }
