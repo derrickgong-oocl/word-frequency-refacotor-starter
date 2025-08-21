@@ -13,11 +13,9 @@ public class WordFrequencyGame {
                 //split the input string with 1 to n pieces of spaces
                 String[] arr = inputStr.split("\\s+");
 
-                List<Input> inputList;
-
                 //get the map for the next step of sizing the same word
 
-                inputList = getInputs(arr);
+                List<Input> inputList = getInputs(arr);
 
                 inputList.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount());
 
