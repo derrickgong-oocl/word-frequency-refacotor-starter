@@ -9,31 +9,44 @@ public class WordFrequencyGame {
         } else {
 
             try {
+
                 //split the input string with 1 to n pieces of spaces
+                String[] arr = inputStr.split("\\s+");
 
                 List<Input> inputList;
 
                 //get the map for the next step of sizing the same word
 
-                inputList = getListMap(Arrays.stream(inputStr.split("\\s+"))
-                        .map(s -> new Input(s, 1))
-                        .collect(Collectors.toList())).entrySet().stream()
-                        .map(entry -> new Input(entry.getKey(), entry.getValue().size()))
-                        .collect(Collectors.toList());
+                inputList = getInputs(arr);
 
                 inputList.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount());
 
-                inputList.stream()
-                        .map(w -> w.getValue() + " " + w.getWordCount())
-                        .forEach(new StringJoiner("\n")::add);
+                StringJoiner joiner = getStringJoiner(inputList);
 
-                return new StringJoiner("\n").toString();
-
+                return joiner.toString();
             } catch (Exception e) {
 
                 return "Calculate Error";
             }
         }
+    }
+
+    private StringJoiner getStringJoiner(List<Input> inputList) {
+        StringJoiner joiner = new StringJoiner("\n");
+        inputList.stream()
+                .map(w -> w.getValue() + " " + w.getWordCount())
+                .forEach(joiner::add);
+        return joiner;
+    }
+
+    private List<Input> getInputs(String[] arr) {
+        List<Input> inputList;
+        inputList = getListMap(Arrays.stream(arr)
+                .map(s -> new Input(s, 1))
+                .collect(Collectors.toList())).entrySet().stream()
+                .map(entry -> new Input(entry.getKey(), entry.getValue().size()))
+                .collect(Collectors.toList());
+        return inputList;
     }
 
 
