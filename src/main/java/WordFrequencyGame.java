@@ -3,7 +3,6 @@ import java.util.*;
 public class WordFrequencyGame {
     public String getResult(String inputStr){
 
-
         if (inputStr.split("\\s+").length==1) {
             return inputStr + " 1";
         } else {
@@ -39,7 +38,6 @@ public class WordFrequencyGame {
                 return joiner.toString();
             } catch (Exception e) {
 
-
                 return "Calculate Error";
             }
         }
@@ -49,15 +47,12 @@ public class WordFrequencyGame {
     private Map<String,List<Input>> getListMap(List<Input> inputList) {
         Map<String, List<Input>> map = new HashMap<>();
         for (Input input :  inputList){
-//       map.computeIfAbsent(input.getValue(), k -> new ArrayList<>()).add(input);
-            if (!map.containsKey(input.getValue())){
+            if (map.containsKey(input.getValue())) {
+                map.get(input.getValue()).add(input);
+            } else {
                 ArrayList arr = new ArrayList<>();
                 arr.add(input);
                 map.put(input.getValue(), arr);
-            }
-
-            else {
-                map.get(input.getValue()).add(input);
             }
         }
 
