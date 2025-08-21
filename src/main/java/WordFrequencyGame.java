@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class WordFrequencyGame {
     public String getResult(String inputStr){
@@ -46,17 +47,8 @@ public class WordFrequencyGame {
 
     private Map<String,List<Input>> getListMap(List<Input> inputList) {
         Map<String, List<Input>> map = new HashMap<>();
-        for (Input input :  inputList){
-            if (map.containsKey(input.getValue())) {
-                map.get(input.getValue()).add(input);
-            } else {
-                ArrayList arr = new ArrayList<>();
-                arr.add(input);
-                map.put(input.getValue(), arr);
-            }
-        }
-
-
+        map = inputList.stream()
+                .collect(Collectors.groupingBy(Input::getValue));
         return map;
     }
 
